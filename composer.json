@@ -1,0 +1,14 @@
+{
+	"name": "criq/pankki",
+	"description": "pankki",
+	"type": "library",
+	"autoload": {
+		"psr-4": {
+			"Pankki\\": "src/"
+		}
+	},
+	"require": {
+		"criq/katu": "^4",
+		"globalcitizen/php-iban": "@stable"
+	}
+}
