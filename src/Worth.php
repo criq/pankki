@@ -2,6 +2,8 @@
 
 namespace Pankki;
 
+use NumberFormatter;
+
 class Worth
 {
 	protected $amount;
@@ -45,8 +47,15 @@ class Worth
 		return $this->currency;
 	}
 
-	public function getFormatted(): string
+	public function getFormatted(?\Katu\Tools\Intl\Locale $locale = null): string
 	{
+		if ($locale) {
+			$formatter = new NumberFormatter($locale->getCode(), NumberFormatter::CURRENCY);
+			$formatter->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, (float)$this->getAmount() === (float)round($this->getAmount()) ? 0 : 2);
+
+			return $formatter->formatCurrency($this->getAmount(), $this->getCurrency()->getCode());
+		}
+
 		return implode(" ", [
 			$this->getAmount(),
 			$this->getCurrency()->getCode(),
