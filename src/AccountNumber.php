@@ -30,7 +30,7 @@ class AccountNumber
 
 	public function getPrefix(): string
 	{
-		return mb_str_pad(mb_substr($this->getNumber(), 0, 6), 6, 0, \STR_PAD_LEFT);
+		return mb_substr($this->getStandardized(), 0, 6);
 	}
 
 	public function getFormattedPrefix(): ?string
@@ -40,7 +40,7 @@ class AccountNumber
 
 	public function getBody(): string
 	{
-		return mb_str_pad(mb_substr($this->getNumber(), 6, 10), 10, 0, \STR_PAD_LEFT);
+		return mb_substr($this->getStandardized(), 6, 10);
 	}
 
 	public function getFormattedBody(): string
