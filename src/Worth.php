@@ -13,6 +13,14 @@ class Worth
 		$this->setCurrency($currency);
 	}
 
+	public function __toString(): string
+	{
+		return implode(" ", [
+			$this->getAmount(),
+			$this->getCurrency()->getCode(),
+		]);
+	}
+
 	public function setAmount(float $amount): Worth
 	{
 		$this->amount = $amount;

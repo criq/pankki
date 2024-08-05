@@ -13,6 +13,11 @@ class Account
 		$this->setBankCode($bankCode);
 	}
 
+	public function __toString(): string
+	{
+		return $this->getFormatted();
+	}
+
 	public function setAccountNumber(AccountNumber $accountNumber): Account
 	{
 		$this->accountNumber = $accountNumber;
@@ -37,21 +42,6 @@ class Account
 		return $this->bankCode;
 	}
 
-	// public function getPrefix(): string
-	// {
-	// 	return mb_substr($this->getAccountId(), 0, 6);
-	// }
-
-	// public function hasPrefix(): bool
-	// {
-	// 	return (int)$this->getPrefix();
-	// }
-
-	// public function getNumber(): string
-	// {
-	// 	return mb_substr($this->getAccountId(), 6, 10);
-	// }
-
 	public function getFormatted(): string
 	{
 		return implode("/", array_filter([
@@ -60,7 +50,7 @@ class Account
 		]));
 	}
 
-	public function getIBAN(): string
+	public function getIBAN(): IBAN
 	{
 		$iban = new \PHP_IBAN\IBAN(implode([
 			"CZ",
@@ -70,6 +60,6 @@ class Account
 		]));
 		$iban->setChecksum();
 
-		return $iban->iban;
+		return new IBAN($iban->iban);
 	}
 }

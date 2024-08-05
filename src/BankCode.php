@@ -2,6 +2,8 @@
 
 namespace Pankki;
 
+use Phan\Language\Element\Func;
+
 class BankCode
 {
 	protected $code;
@@ -9,6 +11,11 @@ class BankCode
 	public function __construct(string $code)
 	{
 		$this->setCode($code);
+	}
+
+	public function __toString(): string
+	{
+		return $this->getStandardized();
 	}
 
 	public function setCode(string $code): BankCode

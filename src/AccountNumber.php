@@ -11,6 +11,11 @@ class AccountNumber
 		$this->setNumber($number);
 	}
 
+	public function __toString(): string
+	{
+		return $this->getStandardized();
+	}
+
 	public function setNumber(string $number): AccountNumber
 	{
 		$this->number = $number;
@@ -28,14 +33,19 @@ class AccountNumber
 		return mb_str_pad(mb_substr($this->getNumber(), 0, 6), 6, 0, \STR_PAD_LEFT);
 	}
 
-	public function hasPrefix(): bool
+	public function getFormattedPrefix(): ?string
 	{
-		return (int)$this->getPrefix();
+		return ltrim($this->getPrefix(), "0");
 	}
 
 	public function getBody(): string
 	{
 		return mb_str_pad(mb_substr($this->getNumber(), 6, 10), 10, 0, \STR_PAD_LEFT);
+	}
+
+	public function getFormattedBody(): string
+	{
+		return ltrim($this->getBody(), "0");
 	}
 
 	public function getStandardized(): string
@@ -47,8 +57,8 @@ class AccountNumber
 	{
 		return implode("/", array_filter([
 			implode("-", array_filter([
-				$this->hasPrefix() ? (int)$this->getPrefix() : null,
-				$this->getNumber(),
+				$this->getFormattedPrefix(),
+				$this->getFormattedBody(),
 			])),
 		]));
 	}
