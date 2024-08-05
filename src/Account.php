@@ -1,65 +1,62 @@
 <?php
 
-namespace GPC;
+namespace Pankki;
 
 class Account
 {
-	protected $accountId;
-	protected $bankId;
+	protected $accountNumber;
+	protected $bankCode;
 
-	public function __construct(string $accountId, ?string $bankId = null)
+	public function __construct(AccountNumber $accountNumber, BankCode $bankCode)
 	{
-		$this->setAccountId($accountId);
-		$this->setBankId($bankId);
+		$this->setAccountNumber($accountNumber);
+		$this->setBankCode($bankCode);
 	}
 
-	public function setAccountId(string $accountId): Account
+	public function setAccountNumber(AccountNumber $accountNumber): Account
 	{
-		$this->accountId = $accountId;
+		$this->accountNumber = $accountNumber;
 
 		return $this;
 	}
 
-	public function getAccountId(): string
+	public function getAccountNumber(): AccountNumber
 	{
-		return $this->accountId;
+		return $this->accountNumber;
 	}
 
-	public function setBankId(?string $bankId): Account
+	public function setBankCode(BankCode $bankCode): Account
 	{
-		$this->bankId = $bankId;
+		$this->bankCode = $bankCode;
 
 		return $this;
 	}
 
-	public function getBankId(): ?string
+	public function getBankCode(): BankCode
 	{
-		return $this->bankId;
+		return $this->bankCode;
 	}
 
-	public function getPrefix(): string
-	{
-		return mb_substr($this->getAccountId(), 0, 6);
-	}
+	// public function getPrefix(): string
+	// {
+	// 	return mb_substr($this->getAccountId(), 0, 6);
+	// }
 
-	public function hasPrefix(): bool
-	{
-		return (int)$this->getPrefix();
-	}
+	// public function hasPrefix(): bool
+	// {
+	// 	return (int)$this->getPrefix();
+	// }
 
-	public function getNumber(): string
-	{
-		return mb_substr($this->getAccountId(), 6, 10);
-	}
+	// public function getNumber(): string
+	// {
+	// 	return mb_substr($this->getAccountId(), 6, 10);
+	// }
 
 	public function getFormatted(): string
 	{
 		return implode("/", array_filter([
-			implode("-", array_filter([
-				$this->hasPrefix() ? (int)$this->getPrefix() : null,
-				$this->getNumber(),
-			])),
-			$this->getBankId(),
+			$this->getAccountNumber()->getFormatted(),
+			$this->getBankCode()->getFormatted(),
 		]));
 	}
 
@@ -68,9 +65,8 @@ class Account
 		$iban = new \PHP_IBAN\IBAN(implode([
 			"CZ",
 			"00",
-			$this->getBankId(),
-			str_pad($this->getPrefix(), 6, 0, \STR_PAD_LEFT),
-			str_pad($this->getNumber(), 10, 0, \STR_PAD_LEFT),
+			$this->getBankCode()->getStandardized(),
+			$this->getAccountNumber()->getStandardized(),
 		]));
 		$iban->setChecksum();
 

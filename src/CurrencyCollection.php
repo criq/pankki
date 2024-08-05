@@ -1,6 +1,6 @@
 <?php
 
-namespace GPC;
+namespace Pankki;
 
 use Katu\Tools\Calendar\Timeout;
 use Katu\Types\TIdentifier;
@@ -26,7 +26,7 @@ class CurrencyCollection extends \ArrayObject
 		});
 	}
 
-	public function filterById(int $id)
+	public function filterById(int $id): CurrencyCollection
 	{
 		return new static(array_values(array_filter($this->getArrayCopy(), function (Currency $currency) use ($id) {
 			return $currency->getId() == $id;

@@ -1,6 +1,6 @@
 <?php
 
-namespace GPC;
+namespace Pankki;
 
 class Currency
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace GPC;
+namespace Pankki;
 
-class Amount
+class Worth
 {
 	protected $amount;
 	protected $currency;
@@ -13,7 +13,7 @@ class Amount
 		$this->setCurrency($currency);
 	}
 
-	public function setAmount(float $amount): Amount
+	public function setAmount(float $amount): Worth
 	{
 		$this->amount = $amount;
 
@@ -25,7 +25,7 @@ class Amount
 		return $this->amount;
 	}
 
-	public function setCurrency(Currency $currency): Amount
+	public function setCurrency(Currency $currency): Worth
 	{
 		$this->currency = $currency;
 
