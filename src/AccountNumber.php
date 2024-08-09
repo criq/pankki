@@ -16,6 +16,11 @@ class AccountNumber
 		return $this->getStandardized();
 	}
 
+	public static function createFromString(string $string): AccountNumber
+	{
+		return new static(str_pad(preg_replace("/-/", "", $string), 16, 0, \STR_PAD_LEFT));
+	}
+
 	public function setNumber(string $number): AccountNumber
 	{
 		$this->number = $number;

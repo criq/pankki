@@ -2,7 +2,7 @@
 
 namespace Pankki;
 
-class BankCode
+class CountryCode
 {
 	protected $code;
 
@@ -16,7 +16,7 @@ class BankCode
 		return $this->getStandardized();
 	}
 
-	public function setCode(string $code): BankCode
+	public function setCode(string $code): CountryCode
 	{
 		$this->code = $code;
 
@@ -30,7 +30,7 @@ class BankCode
 
 	public function getStandardized(): string
 	{
-		return mb_str_pad($this->getCode(), 4, 0, \STR_PAD_LEFT);
+		return mb_strtoupper($this->getCode());
 	}
 
 	public function getFormatted(): string
