@@ -2,10 +2,10 @@
 
 namespace Pankki;
 
-class VariableSymbol extends Symbol
+class ConstantSymbol extends Symbol
 {
 	public function getLength(): int
 	{
-		return 10;
+		return 4;
 	}
 }

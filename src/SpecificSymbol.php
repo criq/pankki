@@ -2,7 +2,7 @@
 
 namespace Pankki;
 
-class VariableSymbol extends Symbol
+class SpecificSymbol extends Symbol
 {
 	public function getLength(): int
 	{

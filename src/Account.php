@@ -102,6 +102,9 @@ class Account implements RestResponseInterface
 		return new IBAN($iban->iban);
 	}
 
+	/****************************************************************************
+	 * REST.
+	 */
 	public function getRestResponse(?ServerRequestInterface $request = null, ?OptionCollection $options = null): RestResponse
 	{
 		return new RestResponse([
