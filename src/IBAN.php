@@ -56,4 +56,9 @@ class IBAN
 			$this->getCountryCode(),
 		);
 	}
+
+	public function getIsValid(): bool
+	{
+		return $this->getPHPIBAN()->Verify();
+	}
 }
