@@ -32,7 +32,7 @@ abstract class Symbol
 
 	public function getStandardized(): string
 	{
-		return mb_str_pad($this->getValue(), $this->getLength(), 0, \STR_PAD_LEFT);
+		return mb_str_pad((string)$this->getValue(), $this->getLength(), 0, \STR_PAD_LEFT);
 	}
 
 	public function getFormatted(): ?string
