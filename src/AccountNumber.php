@@ -18,7 +18,21 @@ class AccountNumber
 
 	public static function createFromString(string $string): AccountNumber
 	{
-		return new static(str_pad(preg_replace("/-/", "", $string), 16, 0, \STR_PAD_LEFT));
+		$parts = explode("-", $string);
+		if (count($parts) == 2) {
+			$prefix = $parts[0];
+			$number = $parts[1];
+		} elseif (count($parts) == 1) {
+			$prefix = null;
+			$number = $parts[0];
+		} else {
+			throw new \Exception("Invalid account number.");
+		}
+
+		return new static(implode("", [
+			str_pad($prefix, 6, "0", \STR_PAD_LEFT),
+			str_pad($number, 10, "0", \STR_PAD_LEFT),
+		]));
 	}
 
 	public function setNumber(string $number): AccountNumber

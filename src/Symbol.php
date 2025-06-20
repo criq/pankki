@@ -37,7 +37,7 @@ abstract class Symbol
 
 	public function getFormatted(): ?string
 	{
-		return ltrim($this->getStandardized(), "0");
+		return ltrim($this->getStandardized(), "0") ?: null;
 	}
 
 	public function getIsFilled(): bool
