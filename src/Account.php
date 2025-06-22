@@ -25,7 +25,7 @@ class Account implements RestResponseInterface
 		return $this->getFormatted();
 	}
 
-	public static function createFromString(string $string)
+	public static function createFromString(string $string): Account
 	{
 		list($accountNumberString, $bankCodeString) = explode("/", $string);
 
