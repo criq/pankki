@@ -35,7 +35,10 @@ class IBAN
 
 	public function getAccountNumber(): AccountNumber
 	{
-		return new AccountNumber($this->getPHPIBAN()->Account());
+		return new AccountNumber(implode([
+			mb_str_pad($this->getPHPIBAN()->Branch(), 6, 0, \STR_PAD_LEFT),
+			mb_str_pad($this->getPHPIBAN()->Account(), 10, 0, \STR_PAD_LEFT),
+		]));
 	}
 
 	public function getBankCode(): BankCode
