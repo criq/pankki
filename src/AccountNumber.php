@@ -19,13 +19,27 @@ class AccountNumber
 	public static function createFromString(string $string): AccountNumber
 	{
 		$parts = explode("-", $string);
+
 		if (count($parts) == 2) {
 			$prefix = $parts[0];
 			$number = $parts[1];
 		} elseif (count($parts) == 1) {
-			$prefix = null;
-			$number = $parts[0];
+			if (mb_strlen($parts[0]) == 16) {
+				$prefix = mb_substr($parts[0], 0, 6);
+				$number = mb_substr($parts[0], 6, 10);
+			} else {
+				$prefix = null;
+				$number = $parts[0];
+			}
 		} else {
+			throw new \Exception("Unsupported account number.");
+		}
+
+		if (mb_strlen($prefix) > 6) {
+			throw new \Exception("Invalid account prefix.");
+		}
+
+		if (mb_strlen($number) > 10) {
 			throw new \Exception("Invalid account number.");
 		}
 
