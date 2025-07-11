@@ -16,7 +16,7 @@ class AccountNumber
 		return $this->getStandardized();
 	}
 
-	public static function createFromString(string $string): AccountNumber
+	public static function createFromString(string $string): ?AccountNumber
 	{
 		$parts = explode("-", $string);
 
@@ -32,15 +32,15 @@ class AccountNumber
 				$number = $parts[0];
 			}
 		} else {
-			throw new \Exception("Unsupported account number.");
+			return null;
 		}
 
 		if (mb_strlen($prefix) > 6) {
-			throw new \Exception("Invalid account prefix.");
+			return null;
 		}
 
 		if (mb_strlen($number) > 10) {
-			throw new \Exception("Invalid account number.");
+			return null;
 		}
 
 		return new static(implode("", [

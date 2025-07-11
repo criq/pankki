@@ -25,14 +25,18 @@ class Account implements RestResponseInterface
 		return $this->getFormatted();
 	}
 
-	public static function createFromString(string $string): Account
+	public static function createFromString(string $string): ?Account
 	{
 		list($accountNumberString, $bankCodeString) = explode("/", $string);
 
-		return new Account(
-			AccountNumber::createFromString($accountNumberString),
-			new BankCode($bankCodeString),
-		);
+		$accountNumber = AccountNumber::createFromString($accountNumberString);
+		$bankCode = new BankCode($bankCodeString);
+
+		if ($accountNumber && $bankCode) {
+			return new Account($accountNumber, $bankCode);
+		}
+
+		return null;
 	}
 
 	public function setAccountNumber(AccountNumber $accountNumber): Account
