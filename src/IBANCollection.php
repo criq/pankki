@@ -16,7 +16,7 @@ class IBANCollection extends \ArrayObject
 			return is_string($iban) && !empty(trim($iban));
 		});
 
-		$validation = new ValidationCollection(array_map(function (string $input, int $index) use ($ibans) {
+		$validation = (new ValidationCollection(array_map(function (string $input, int $index) use ($ibans) {
 			$param = new Param("{$ibans->getKey()}.{$index}", $input);
 			$validation = new Validation;
 
@@ -37,21 +37,19 @@ class IBANCollection extends \ArrayObject
 			}
 
 			return $validation;
-		}, $array, array_keys($array)));
+		}, $array, array_keys($array))))->getMerged();
 
-		$mergedValidation = $validation->getMerged();
-
-		if ($mergedValidation->hasErrors()) {
-			return $mergedValidation;
+		if ($validation->hasErrors()) {
+			return $validation;
 		}
 
 		$output = new IBANCollection(array_values(array_filter(array_map(function (Param $param) {
 			return $param->getOutput();
-		}, $mergedValidation->getParams()->getArrayCopy()))));
+		}, $validation->getParams()->getArrayCopy()))));
 
-		$mergedValidation->setResponse($output)->addParam($ibans->setOutput($output));
+		$validation->setResponse($output)->addParam($ibans->setOutput($output));
 
-		return $mergedValidation;
+		return $validation;
 	}
 
 	public function getAccounts(): AccountCollection
