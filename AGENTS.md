@@ -739,7 +739,36 @@ class IBAN
 }
 ```
 
-### 11.4. Symbol Classes
+### 11.4. IBANCollection Class
+
+```php
+class IBANCollection extends \ArrayObject
+{
+    // Static methods
+    public static function validate(Param $ibans): Validation;
+
+    // Instance methods
+    public function getAccounts(): AccountCollection;
+}
+```
+
+**Key Features**:
+- **IBAN Validation**: Validates arrays of IBAN strings
+- **Account Conversion**: Simple method to convert IBANs to Account objects
+- **Error Handling**: Provides context-agnostic error messages
+- **Collection Management**: Handles arrays of IBAN strings
+
+**Usage Examples**:
+```php
+// Validate IBANs and return IBANCollection
+$validation = IBANCollection::validate($param);
+$ibans = $validation->getResponse(); // IBANCollection
+
+// Convert IBANs to Accounts
+$accounts = $ibans->getAccounts(); // AccountCollection
+```
+
+### 11.5. Symbol Classes
 
 ```php
 abstract class Symbol
