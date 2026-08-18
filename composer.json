@@ -1,6 +1,7 @@
 {
 	"name": "criq/pankki",
 	"description": "pankki",
+	"version": "8.20260818.1",
 	"type": "library",
 	"autoload": {
 		"psr-4": {
@@ -8,7 +9,8 @@
 		}
 	},
 	"require": {
-		"criq/katu": "^4",
+		"php": ">=8.4",
+		"criq/katu": "^8",
 		"globalcitizen/php-iban": "@stable"
 	}
 }
